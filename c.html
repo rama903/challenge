@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGI Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    nav {
+      width: 220px;
+      background-color: #111827;
+      color: white;
+      padding: 1rem;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav li {
+      margin: 1rem 0;
+      cursor: pointer;
+    }
+    main {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card h2 {
+      margin-top: 0;
+    }
+    .status {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #10b981;
+    }
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>AGI Monitoring Dashboard</header>
+  <div class="container">
+    <nav>
+      <ul>
+        <li onclick="showSection('overview')">Overview</li>
+        <li onclick="showSection('metrics')">AGI Metrics</li>
+        <li onclick="showSection('logs')">System Logs</li>
+      </ul>
+    </nav>
+    <main>
+      <div id="overview" class="card">
+        <h2>System Overview</h2>
+        <p>Welcome to the AGI dashboard. Monitor real-time performance, logic cycles, and system health.</p>
+      </div>
+      <div id="metrics" class="card" style="display:none;">
+        <h2>AGI Metrics</h2>
+        <p>Current AGI Status: <span class="status" id="agiStatus">Initializing...</span></p>
+        <p>Logic Cycles: <span id="logicCycles">0</span></p>
+        <p>Neural Load: <span id="neuralLoad">0%</span></p>
+      </div>
+      <div id="logs" class="card" style="display:none;">
+        <h2>System Logs</h2>
+        <ul id="logList"></ul>
+      </div>
+    </main>
+  </div>
+  <div class="footer">© 2025 AGI Systems Inc.</div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('main .card').forEach(card => {
+        card.style.display = 'none';
+      });
+      document.getElementById(id).style.display = 'block';
+    }
+
+    // Simulate AGI metrics
+    let cycles = 0;
+    setInterval(() => {
+      cycles += Math.floor(Math.random() * 10);
+      const load = Math.floor(Math.random() * 100);
+      document.getElementById('logicCycles').textContent = cycles;
+      document.getElementById('neuralLoad').textContent = load + '%';
+      document.getElementById('agiStatus').textContent = load > 80 ? 'High Load' : 'Stable';
+
+      const log = `Cycle ${cycles}: Neural load at ${load}%`;
+      const logItem = document.createElement('li');
+      logItem.textContent = log;
+      const logList = document.getElementById('logList');
+      logList.insertBefore(logItem, logList.firstChild);
+      if (logList.children.length > 10) logList.removeChild(logList.lastChild);
+    }, 2000);
+  </script>
+</body>
+</html>
